@@ -120,4 +120,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+# where to redirect after logging in
+LOGIN_REDIRECT_URL = '/'
+
 
