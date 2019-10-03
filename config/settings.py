@@ -26,6 +26,7 @@ SECRET_KEY = 'b9tjqk(vrrg6wo7n4io7xnk2+2ffa1$4z-43t0zs-p@#ym8cmm'
 DEBUG = True
 
 ALLOWED_HOSTS = []
+TIME_ZONE = 'Asia/Kolkata'
 
 
 # Application definition
@@ -118,3 +119,5 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
+
