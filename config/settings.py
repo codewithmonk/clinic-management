@@ -26,7 +26,7 @@ SECRET_KEY = 'b9tjqk(vrrg6wo7n4io7xnk2+2ffa1$4z-43t0zs-p@#ym8cmm'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 TIME_ZONE = 'Asia/Kolkata'
 
 
