@@ -1,8 +1,10 @@
 from django.db import models
+from phone_field import PhoneField
+from time import timezone
 
 # Create your models here.
-NONE = 'Not willing to share'
-MALE = 'Male'
+NONE = 'NOT WILLING TO SHARE'
+MALE = 'MALE'
 FEMALE = 'FEMALE'
 OTHERS = 'OTHERS'
 
@@ -18,9 +20,39 @@ class Patient(models.Model):
     name = models.CharField(max_length=40)
     age = models.IntegerField()
     gender = models.CharField(choices=gender_choices, default=NONE, max_length=20)
-    phone = models.IntegerField(primary_key=True, db_index=True)
+    phone = models.CharField(max_length=16, db_index=True)
     address = models.TextField(max_length=150)
     date = models.DateTimeField(auto_now_add=True)  # auto_now_add adds current time by default while saving.
+    # Ashtashthana Pareeksha
+    nadi = models.CharField(max_length=30)
+    jihwa = models.CharField(max_length=30)
+    mutra = models.CharField(max_length=30)
+    drit = models.CharField(max_length=30)
+    malam = models.CharField(max_length=30)
+    sabdam = models.CharField(max_length=30)
+    atriti = models.CharField(max_length=30)
+    sparsha = models.CharField(max_length=30)
+    dushyam = models.CharField(max_length=30)
+    prakriti = models.CharField(max_length=30)
+    desha = models.CharField(max_length=30)
+    vaya = models.CharField(max_length=30)
+    bala = models.CharField(max_length=30)
+    satwa = models.CharField(max_length=30)
+    kala = models.CharField(max_length=30)
+    sathmaya = models.CharField(max_length=30)
+    anala = models.CharField(max_length=30)
+    ahara = models.CharField(max_length=30)
+    # examination
+    height = models.CharField(max_length=30, null=True)
+    weight = models.CharField(max_length=30, null=True)
+    pulse = models.CharField(max_length=30, null=True)
+    blood_pressure = models.CharField(max_length=30, null=True)
+    heart_rate = models.CharField(max_length=30, null=True)
+    other_examination = models.TextField(max_length=300, blank=True)
+
+
+class CaseSheet(models.Model):
+    pass
 
 
 

@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+    <!--We will receive >tickets< object-->
+
+{% block title %}CMS Home{% endblock %}
+
+{% load static %}
+
+{% block navigator %}
+<li><a href="search">Search</a></li>
+<li><a href="/">Home</a></li>
+<li><a href="/pms">PMS</a></li>
+{% endblock %}}
+
+
+{% block main %}
+
+<div class="container-fluid">
+    <div class="conatiner">
+        <center>
+            <form class="form-group" method="POST"> {% csrf_token %}
+                <label>Enter Patient Phone Number: </label>
+                <input type="tel" name="patient_phone_number">
+                <button class="btn btn-primary" type="submit" >Search</button>
+            </form>
+        </center>
+    </div>
+</div>
+
+{% endblock %}
