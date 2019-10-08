@@ -41,6 +41,7 @@ def search(request):
             patient = Patient.objects.filter(phone=phone_number)
             # print(patient[0].name)
             if patient:
+                print(patient.id)
                 return render(request, 'core/patient-info.html', {'patient': patient[0]})
             else:
                 return render(request, 'core/search-error.html', {})
