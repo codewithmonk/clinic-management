@@ -18,6 +18,10 @@
     <center><h2>General Info</h2></center>
      <table class="table table-hover">
          <tr>
+             <td>Patient ID</td>
+             <td>{{ patient.id }}</td>
+         </tr>
+         <tr>
              <td>Name:</td>
              <td>{{ patient.name }}</td>
          </tr>
@@ -138,7 +142,7 @@
         </tr>
         <tr>
             <td>Other Examinations</td>
-            <td>{{ patient.other_examinations }}</td>
+            <td>{{ patient.other_examination }}</td>
         </tr>
     </table>
 </div>

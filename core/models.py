@@ -19,7 +19,7 @@ class Patient(models.Model):
     name = models.CharField(max_length=40)
     age = models.IntegerField()
     gender = models.CharField(choices=gender_choices, default=NONE, max_length=20)
-    phone = models.CharField(max_length=16, db_index=True)
+    phone = models.CharField(max_length=16, db_index=True, primary_key=True)
     address = models.TextField(max_length=150)
     date = models.DateTimeField(auto_now_add=True)  # auto_now_add adds current time by default while saving.
     # Ashtashthana Pareeksha
@@ -47,7 +47,7 @@ class Patient(models.Model):
     pulse = models.CharField(max_length=30, null=True)
     blood_pressure = models.CharField(max_length=30, null=True)
     heart_rate = models.CharField(max_length=30, null=True)
-    other_examination = models.TextField(max_length=300, blank=True)
+    other_examination = models.TextField(max_length=300, blank=True, null=True)
 
 
 class CaseSheet(models.Model):

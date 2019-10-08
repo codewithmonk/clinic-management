@@ -6,13 +6,59 @@
 
 {% load static %}
 
+{% block javascript %}
+    <script>
+        $(document).ready(function(){
+            $("#add_new").attr("disabled", true);
+        });
+
+        $(document).ready(function(){
+            $("#id_phone").focusout(function(){
+                var phone = $("#id_phone").val();
+                $.ajax({
+                    url: '/ajax/validate_phone/',
+                    data: {
+                      'phone': phone
+                    },
+                    dataType: 'json',
+                    success: function (data) {
+                      if (data.present == false) {
+                        $("#add_new").attr("disabled", false);
+                      } else{
+                        $("#add_new").attr("disabled", true);
+                        alert(data.error_message)
+                      }
+                    }
+                  });
+
+            });
+        })
+
+    </script>
+{% endblock %}
+
+{% block navigator %}
+<li><a href="/pms/search">Search</a></li>
+<li><a href="/">Home</a></li>
+<li><a href="/pms">PMS</a></li>
+{% endblock %}}
+
 {% block main %}
 <div class="container">
     <form class="form-group" method="POST">{% csrf_token %}
         <br>
         <table>
         {% for field in form %}
-            {% if
+            {% if field.label == 'Nadi' %}
+            <tr><td><h1>Ashtashtana Pareeksha</h1></td></tr>
+
+            {% elif field.label == 'Dushyam' %}
+            <tr><td><h1>Dasavidha Pareeksha</h1></td></tr>
+            {% elif field.label == 'Height' %}
+            <tr><td><h1>Examination</h1></td></tr>
+            {% elif field.label == 'Name' %}
+            <tr><td><h1>General Info</h1></td></tr>
+            {% endif %}
             <tr>
                 <td>
                     <label>

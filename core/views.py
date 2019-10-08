@@ -3,6 +3,7 @@ from django.shortcuts import get_object_or_404
 from django.contrib.auth.decorators import login_required
 from .forms import PatientForm
 from .models import Patient
+from django.http import JsonResponse
 
 # Create your views here.
 
@@ -23,7 +24,7 @@ def add_new_patient(request):
         form = PatientForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('/')
+            return redirect('/pms')
         else:
             print("Not Valid!")
     else:
@@ -38,9 +39,20 @@ def search(request):
         if phone_number:
             # patient = get_object_or_404(Patient, phone=phone_number)
             patient = Patient.objects.filter(phone=phone_number)
-            print(patient[0].name)
+            # print(patient[0].name)
             if patient:
                 return render(request, 'core/patient-info.html', {'patient': patient[0]})
             else:
                 return render(request, 'core/search-error.html', {})
     return render(request, 'core/search.html', {})
+
+
+def validate_phone(request):
+    phone = request.GET.get('phone', None)
+    data = {
+        "present": Patient.objects.filter(phone__iexact=phone).exists()
+    }
+    print(data['present'])
+    if data["present"]:
+        data["error_message"] = "A user is already registered with this number"
+    return JsonResponse(data)
