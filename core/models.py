@@ -1,5 +1,4 @@
 from django.db import models
-from phone_field import PhoneField
 from time import timezone
 
 # Create your models here.
