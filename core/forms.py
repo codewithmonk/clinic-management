@@ -27,7 +27,7 @@ class PatientForm(forms.ModelForm):
             'bala',
             'satwa',
             'kala',
-            'sathmaya',
+            'sathmya',
             'anala',
             'ahara',
             'height',

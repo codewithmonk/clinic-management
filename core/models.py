@@ -38,7 +38,7 @@ class Patient(models.Model):
     bala = models.CharField(max_length=30)
     satwa = models.CharField(max_length=30)
     kala = models.CharField(max_length=30)
-    sathmaya = models.CharField(max_length=30)
+    sathmya = models.CharField(max_length=30)
     anala = models.CharField(max_length=30)
     ahara = models.CharField(max_length=30)
     # examination
