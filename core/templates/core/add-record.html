@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+    <!--We will receive >tickets< object-->
+
+{% block title %}Add Record{% endblock %}
+
+{% load static %}
+
+
+{% block navigator %}
+<li><a href="/pms/search">Search</a></li>
+<li><a href="/">Home</a></li>
+<li><a href="/pms">PMS</a></li>
+{% endblock %}}
+
+{% block main %}
+<div class="container">
+    <form class="form-group" method="POST">{% csrf_token %}
+        <br>
+        <table>
+        {% for field in form %}
+            <tr>
+                <td>
+                    <label>
+                            {{ field.label }}
+                    </label>
+                    </td>
+                <td>
+            &nbsp;&nbsp;&nbsp;{{ field }}
+                </td>
+            </tr>
+        {% endfor %}
+            <tr colspan="2">
+                <td>
+                    <button class="btn btn-primary" type="submit" id="add_new_record">Create</button>
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+{% endblock %}

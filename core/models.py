@@ -49,9 +49,20 @@ class Patient(models.Model):
     heart_rate = models.CharField(max_length=30, null=True)
     other_examination = models.TextField(max_length=300, blank=True, null=True)
 
+    def __str__(self):
+        return "{} ({})".format(self.name, self.age)
+
 
 class CaseSheet(models.Model):
-    pass
+    complaints = models.TextField(blank=True, null=True)
+    diagnosis = models.TextField(blank=True, null=True)
+    prescriptions = models.TextField(blank=True, null=True)
+    treatments = models.TextField(blank=True, null=True)
+    visit_date = models.DateField(auto_now=True)
+    patient = models.ForeignKey(Patient, on_delete=models.CASCADE, related_name="casesheet")
+
+    def __str__(self):
+        return self.patient.name
 
 
 

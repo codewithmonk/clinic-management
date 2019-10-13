@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+    <!--We will receive >tickets< object-->
+
+{% block title %}CMS Home{% endblock %}
+
+{% load static %}
+{% block navigator %}
+<li><a href="/pms/search">Search</a></li>
+<li><a href="/">Home</a></li>
+<li><a href="/pms">PMS</a></li>
+{% endblock %}}
+
+
+{% block main %}
+
+<div class="table-responsive">
+    <center><h2>Patient History for {{ patient.name }}</h2></center>
+     <table class="table table-hover">
+         {% for record in records %}
+             <table class="table table-hover">
+                 <tr> <h2>Visit on {{ record.visit_date }}</h2></tr>
+                    <tr>
+                        <td>Complaints</td>
+                        <td><pre>{{ record.complaints }}</pre></td>
+                    </tr>
+                    <tr>
+                        <td>Diagnosis</td>
+                        <td><pre>{{ record.diagnosis }}</pre></td>
+                    </tr>
+                    <tr>
+                        <td>Prescriptions</td>
+                        <td><pre>{{ record.prescriptions }}</pre></td>
+                    </tr>
+                    <tr>
+                        <td>Treatments</td>
+                        <td><pre>{{ record.treatments }}</pre></td>
+                    </tr>
+              </table>
+         {% endfor %}
+     </table>
+</div>
+{% if records.has_other_pages %}
+<ul class="pagination">
+    {% if records.has_previous %}
+        <li class="page-item"><a class="page-link" href="?page={{ records.previous_page_number }}">Previous</a></li>
+    {% else %}
+        <li class="page-item"><a class="page-link">Previous</a></li>
+    {% endif %}
+    {% for i in records.paginator.page_range %}
+        {% if records.number == i %}
+            <li class="page-item active"><a class="page-link"> {{ i }}</a> </li>
+        {% else %}
+            <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+        {% endif %}
+    {% endfor %}
+    {% if records.has_next %}
+        <li class="page-item"><a class="page-link" href="?page={{ records.next_page_number }}">Next</a></li>
+    {% else %}
+        <li class="page-item"><a class="page-link">Next</a></li>
+    {% endif %}
+</ul>
+{% endif %}
+{% endblock %}

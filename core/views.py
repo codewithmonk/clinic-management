@@ -1,10 +1,12 @@
 from django.shortcuts import render, redirect
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.decorators import login_required
-from .forms import PatientForm
-from .models import Patient
+from .forms import PatientForm, PatientRecordForm
+from .models import Patient, CaseSheet
 from django.http import JsonResponse
-
+from django.views.generic import ListView
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from .models import Patient
 # Create your views here.
 
 
@@ -33,6 +35,36 @@ def add_new_patient(request):
 
 
 @login_required
+def add_record(request, pk):
+    patient = Patient.objects.filter(pk=pk)[0]
+    if request.method == "POST":
+        form = PatientRecordForm(request.POST)
+        if form.is_valid():
+            record = form.save(commit=False)
+            record.patient = patient
+            record.save()
+            return redirect('/pms')
+        else:
+            print("Not Valid!")
+    else:
+        form = PatientRecordForm()
+    return render(request, "core/add-record.html", {'form': form})
+
+@login_required
+def show_history(request, pk):
+    patient = Patient.objects.filter(pk=pk)[0]
+    record_list = CaseSheet.objects.filter(patient_id=pk)
+    page = request.GET.get('page', 1)
+    paginator = Paginator(record_list, 2)
+    try:
+        records = paginator.page(page)
+    except PageNotAnInteger:
+        records = paginator.page(1)
+    except EmptyPage:
+        records = paginator.page(paginator.num_pages)
+    return render(request, 'core/patient-history.html', {'records': records, 'patient': patient})
+
+@login_required
 def search(request):
     if request.method == "POST":
         phone_number = request.POST.get('patient_phone_number', None)
@@ -57,3 +89,6 @@ def validate_phone(request):
     if data["present"]:
         data["error_message"] = "A user is already registered with this number"
     return JsonResponse(data)
+
+
+
