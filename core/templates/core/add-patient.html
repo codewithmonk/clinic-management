@@ -49,14 +49,7 @@
         <br>
         <table>
         {% for field in form %}
-            {% if field.label == 'Nadi' %}
-            <tr><td><h1>Ashtashtana Pareeksha</h1></td></tr>
-
-            {% elif field.label == 'Dushyam' %}
-            <tr><td><h1>Dasavidha Pareeksha</h1></td></tr>
-            {% elif field.label == 'Height' %}
-            <tr><td><h1>Examination</h1></td></tr>
-            {% elif field.label == 'Name' %}
+            {% if field.label == 'Name' %}
             <tr><td><h1>General Info</h1></td></tr>
             {% endif %}
             <tr>

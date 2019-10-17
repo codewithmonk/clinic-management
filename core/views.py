@@ -54,6 +54,10 @@ def add_record(request, pk):
 def show_history(request, pk):
     patient = Patient.objects.filter(pk=pk)[0]
     record_list = CaseSheet.objects.filter(patient_id=pk)
+    if len(record_list) > 0:
+        message = ""
+    else:
+        message = "No Records found!"
     page = request.GET.get('page', 1)
     paginator = Paginator(record_list, 2)
     try:
@@ -62,10 +66,10 @@ def show_history(request, pk):
         records = paginator.page(1)
     except EmptyPage:
         records = paginator.page(paginator.num_pages)
-    return render(request, 'core/patient-history.html', {'records': records, 'patient': patient})
+    return render(request, 'core/patient-history.html', {'records': records, 'patient': patient, 'message':message})
 
 @login_required
-def search(request):
+def search_by_phone(request):
     if request.method == "POST":
         phone_number = request.POST.get('patient_phone_number', None)
         if phone_number:
@@ -78,6 +82,21 @@ def search(request):
             else:
                 return render(request, 'core/search-error.html', {})
     return render(request, 'core/search.html', {})
+
+@login_required
+def search_by_id(request):
+    if request.method == "POST":
+        id = request.POST.get('patient_id', None)
+        if id:
+            # patient = get_object_or_404(Patient, phone=phone_number)
+            patient = Patient.objects.filter(id=id)
+            # print(patient[0].name)
+            if len(patient) > 0:
+                print(patient[0].id)
+                return render(request, 'core/patient-info.html', {'patient': patient[0]})
+            else:
+                return render(request, 'core/search-error.html', {})
+    return render(request, 'core/id-search.html', {})
 
 
 def validate_phone(request):

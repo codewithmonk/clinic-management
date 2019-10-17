@@ -6,59 +6,175 @@
 
 {% load static %}
 {% block navigator %}
-<li><a href="/pms/search">Search</a></li>
+<li><a href="/pms/search">Search using phone number</a></li>
 <li><a href="/">Home</a></li>
 <li><a href="/pms">PMS</a></li>
+<li><a href="/doctor-view">Search using ID</a> </li>
 {% endblock %}}
 
 
 {% block main %}
-
-<div class="table-responsive">
-    <center><h2>Patient History for {{ patient.name }}</h2></center>
-     <table class="table table-hover">
-         {% for record in records %}
-             <table class="table table-hover">
-                 <tr> <h2>Visit on {{ record.visit_date }}</h2></tr>
-                    <tr>
-                        <td>Complaints</td>
-                        <td><pre>{{ record.complaints }}</pre></td>
-                    </tr>
-                    <tr>
-                        <td>Diagnosis</td>
-                        <td><pre>{{ record.diagnosis }}</pre></td>
-                    </tr>
-                    <tr>
-                        <td>Prescriptions</td>
-                        <td><pre>{{ record.prescriptions }}</pre></td>
-                    </tr>
-                    <tr>
-                        <td>Treatments</td>
-                        <td><pre>{{ record.treatments }}</pre></td>
-                    </tr>
-              </table>
-         {% endfor %}
-     </table>
-</div>
-{% if records.has_other_pages %}
-<ul class="pagination">
-    {% if records.has_previous %}
-        <li class="page-item"><a class="page-link" href="?page={{ records.previous_page_number }}">Previous</a></li>
-    {% else %}
-        <li class="page-item"><a class="page-link">Previous</a></li>
-    {% endif %}
-    {% for i in records.paginator.page_range %}
-        {% if records.number == i %}
-            <li class="page-item active"><a class="page-link"> {{ i }}</a> </li>
+{% if message != ''%}
+    <h1>{{ message }}</h1>
+{% else %}
+    <div class="table-responsive">
+        <center><h2>Patient History for {{ patient.name }}</h2></center>
+         <table class="table table-hover">
+             {% for record in records %}
+                 <table class="table table-hover">
+                     <tr> <h2>Visit on {{ record.visit_date }}</h2></tr>
+                     <tr>
+                         <td>Previous Complaints</td>
+                         <td><pre>{{ record.complaints }}</pre></td>
+                     </tr>
+                     <tr>
+                         <td>Previous History</td>
+                         <td><pre>{{ record.history }}</pre></td>
+                     </tr>
+                     <tr>
+                         <td colspan="2"><h2>Previous Examinations</h2></td>
+                     </tr>
+                     <tr>
+                         <td>Height</td>
+                         <td>{{ record.height }}</td>
+                     </tr>
+                     <tr>
+                         <td>Weight</td>
+                         <td>{{ record.weight }}</td>
+                     </tr>
+                     <tr>
+                         <td>Pulse</td>
+                         <td>{{ record.pulse }}</td>
+                     </tr>
+                     <tr>
+                         <td>Blood Pressure</td>
+                         <td>{{ record.blood_pressure }}</td>
+                     </tr>
+                     <tr>
+                         <td>Heart Rate</td>
+                         <td>{{ record.heart_rate }}</td>
+                     </tr>
+                     <tr>
+                         <td>Other Examinations</td>
+                         <td><pre>{{ record.other_examination }}</pre></td>
+                     </tr>
+                     <tr>
+                         <td colspan="2"><h2>Ashtasthana Pareeksha</h2></td>
+                     </tr>
+                     <tr>
+                         <td>Nadi</td>
+                         <td>{{ record.nadi }}</td>
+                     </tr>
+                     <tr>
+                         <td>Jihwa</td>
+                         <td>{{ record.jihwa }}</td>
+                     </tr>
+                     <tr>
+                         <td>Mutra</td>
+                         <td>{{ record.mutra }}</td>
+                     </tr>
+                     <tr>
+                         <td>Drik</td>
+                         <td>{{ record.drik }}</td>
+                     </tr>
+                     <tr>
+                         <td>Malam</td>
+                         <td>{{ record.malam }}</td>
+                     </tr>
+                     <tr>
+                         <td>Sabdam</td>
+                         <td>{{ record.sabdam }}</td>
+                     </tr>
+                     <tr>
+                         <td>Akriti</td>
+                         <td>{{ record.akriti }}</td>
+                     </tr>
+                     <tr>
+                         <td>Sparsha</td>
+                         <td>{{ record.sparsha }}</td>
+                     </tr>
+                     <tr>
+                         <td colspan="2"><h2>Dasavidha Pareeksha</h2></td>
+                     </tr>
+                     <tr>
+                         <td>Dushyam</td>
+                         <td>{{ record.dushyam }}</td>
+                     </tr>
+                     <tr>
+                         <td>Desha</td>
+                         <td>{{ record.desha }}</td>
+                     </tr>
+                     <tr>
+                         <td>Bala</td>
+                         <td>{{ record.bala }}</td>
+                     </tr>
+                     <tr>
+                         <td>Kala</td>
+                         <td>{{ record.kala }}</td>
+                     </tr>
+                     <tr>
+                         <td>Anala</td>
+                         <td>{{ record.anala }}</td>
+                     </tr>
+                     <tr>
+                         <td>Prakriti</td>
+                         <td>{{ record.prakriti }}</td>
+                     </tr>
+                     <tr>
+                         <td>Vaya</td>
+                         <td>{{ record.vaya }}</td>
+                     </tr>
+                     <tr>
+                         <td>Satwa</td>
+                         <td>{{ record.satwa }}</td>
+                     </tr>
+                     <tr>
+                         <td>Sathmya</td>
+                         <td>{{ record.sathmya }}</td>
+                     </tr>
+                     <tr>
+                         <td>Ahara</td>
+                         <td>{{ record.ahara }}</td>
+                     </tr>
+                     <tr>
+                         <td colspan="2"><h2>Diagnosis and Treatments</h2></td>
+                     </tr>
+                     <tr>
+                         <td>Diagnosis</td>
+                         <td><pre>{{ record.diagnosis }}</pre></td>
+                     </tr>
+                     <tr>
+                         <td>Prescription</td>
+                         <td><pre>{{ record.prescriptions }}</pre></td>
+                     </tr>
+                     <tr>
+                         <td>Treatments Suggested</td>
+                         <td><pre>{{ record.treatments }}</pre></td>
+                     </tr>
+                  </table>
+             {% endfor %}
+         </table>
+    </div>
+    {% if records.has_other_pages %}
+    <ul class="pagination">
+        {% if records.has_previous %}
+            <li class="page-item"><a class="page-link" href="?page={{ records.previous_page_number }}">Previous</a></li>
         {% else %}
-            <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+            <li class="page-item"><a class="page-link">Previous</a></li>
         {% endif %}
-    {% endfor %}
-    {% if records.has_next %}
-        <li class="page-item"><a class="page-link" href="?page={{ records.next_page_number }}">Next</a></li>
-    {% else %}
-        <li class="page-item"><a class="page-link">Next</a></li>
+        {% for i in records.paginator.page_range %}
+            {% if records.number == i %}
+                <li class="page-item active"><a class="page-link"> {{ i }}</a> </li>
+            {% else %}
+                <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+            {% endif %}
+        {% endfor %}
+        {% if records.has_next %}
+            <li class="page-item"><a class="page-link" href="?page={{ records.next_page_number }}">Next</a></li>
+        {% else %}
+            <li class="page-item"><a class="page-link">Next</a></li>
+        {% endif %}
+    </ul>
     {% endif %}
-</ul>
 {% endif %}
 {% endblock %}

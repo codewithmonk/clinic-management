@@ -22,6 +22,22 @@ class Patient(models.Model):
     phone = models.CharField(max_length=16, db_index=True)
     address = models.TextField(max_length=150)
     date = models.DateTimeField(auto_now_add=True)  # auto_now_add adds current time by default while saving.
+
+
+    def __str__(self):
+        return "{} ({})".format(self.name, self.age)
+
+
+class CaseSheet(models.Model):
+    complaints = models.TextField(blank=True, null=True)
+    history = models.TextField(max_length=300, blank=True, null=True)
+    # examination
+    height = models.CharField(max_length=30, null=True)
+    weight = models.CharField(max_length=30, null=True)
+    pulse = models.CharField(max_length=30, null=True)
+    blood_pressure = models.CharField(max_length=30, null=True)
+    heart_rate = models.CharField(max_length=30, null=True)
+    other_examination = models.TextField(max_length=300, blank=True, null=True)
     # Ashtashthana Pareeksha
     nadi = models.CharField(max_length=30)
     jihwa = models.CharField(max_length=30)
@@ -31,30 +47,18 @@ class Patient(models.Model):
     sabdam = models.CharField(max_length=30)
     akriti = models.CharField(max_length=30)
     sparsha = models.CharField(max_length=30)
+    # dasavidha pareeksha
     dushyam = models.CharField(max_length=30)
-    prakriti = models.CharField(max_length=30)
     desha = models.CharField(max_length=30)
-    vaya = models.CharField(max_length=30)
     bala = models.CharField(max_length=30)
-    satwa = models.CharField(max_length=30)
     kala = models.CharField(max_length=30)
-    sathmya = models.CharField(max_length=30)
     anala = models.CharField(max_length=30)
+    prakriti = models.CharField(max_length=30)
+    vaya = models.CharField(max_length=30)
+    satwa = models.CharField(max_length=30)
+    sathmya = models.CharField(max_length=30)
     ahara = models.CharField(max_length=30)
-    # examination
-    height = models.CharField(max_length=30, null=True)
-    weight = models.CharField(max_length=30, null=True)
-    pulse = models.CharField(max_length=30, null=True)
-    blood_pressure = models.CharField(max_length=30, null=True)
-    heart_rate = models.CharField(max_length=30, null=True)
-    other_examination = models.TextField(max_length=300, blank=True, null=True)
-
-    def __str__(self):
-        return "{} ({})".format(self.name, self.age)
-
-
-class CaseSheet(models.Model):
-    complaints = models.TextField(blank=True, null=True)
+    # doctor's content
     diagnosis = models.TextField(blank=True, null=True)
     prescriptions = models.TextField(blank=True, null=True)
     treatments = models.TextField(blank=True, null=True)

@@ -19,16 +19,43 @@
         <br>
         <table>
         {% for field in form %}
+            {% if field.label == 'Nadi'%}
+            <tr>
+                <td colspan="2"><h3><br>Ashtasthana Pareeksha</h3><br></td>
+            </tr>
+            {% elif field.label == 'Dushyam' %}
+                <tr>
+                    <td colspan="2"><h2><br>Dasavidha Pareeksha</h2><br></td>
+                </tr>
+            {% elif field.label == 'Diagnosis' %}
+                <tr>
+                    <td colspan="2"><h2><br>Diagnosis and Treatments</h2><br></td>
+                </tr>
+            {% elif field.label == 'Height' %}
+                <tr>
+                    <td colspan="2"><br><h2>Examinations</h2><br></td>
+                </tr>
+            {% elif field.label == 'Complaints'%}
+                <tr>
+                    <td colspan="2"><br><h2>Complaints and History</h2><br></td>
+                </tr>
+            {% endif %}
             <tr>
                 <td>
                     <label>
+                        {% if field.label == 'Complaints' %}
+                            Presenting complaints
+                        {% else %}
                             {{ field.label }}
+                        {% endif %}
                     </label>
                     </td>
-                <td>
-            &nbsp;&nbsp;&nbsp;{{ field }}
-                </td>
+                    <td>
+                &nbsp;&nbsp;&nbsp;{{ field }}
+                    </td>
             </tr>
+
+
         {% endfor %}
             <tr colspan="2">
                 <td>
