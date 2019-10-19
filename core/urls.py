@@ -12,6 +12,7 @@ urlpatterns = [
     path('pms/view_history/<int:pk>', views.show_history, name="show_history"),
     path('doctor-view/', views.search_by_id, name="search_by_id"),
     path('doctor-view/view_history/<int:pk>', views.show_history, name="show_patient_history"),
+    path('doctor-view/add_record/<int:pk>', views.add_record, name="add_patient_record"),
 
     #add-patient-info, #search-existing-patient
 ]
