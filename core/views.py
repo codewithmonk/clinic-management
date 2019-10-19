@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.decorators import login_required
 from .forms import PatientForm, PatientRecordForm
@@ -7,6 +7,7 @@ from django.http import JsonResponse
 from django.views.generic import ListView
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from .models import Patient
+from django.http import JsonResponse
 # Create your views here.
 
 
@@ -25,8 +26,8 @@ def add_new_patient(request):
     if request.method == "POST":
         form = PatientForm(request.POST)
         if form.is_valid():
-            form.save()
-            return redirect('/pms')
+            patient = form.save()
+            return render(request, 'core/registered.html', {'patient': patient})
         else:
             print("Not Valid!")
     else:
@@ -97,6 +98,18 @@ def search_by_id(request):
             else:
                 return render(request, 'core/search-error.html', {})
     return render(request, 'core/id-search.html', {})
+
+@login_required
+def get_patient_info(request, pk):
+    patient = Patient.objects.filter(pk=pk)
+    if len(patient) > 0:
+        patient = patient[0]
+        print(patient)
+        return render(request, 'core/patient-info.html', {'patient': patient[0]})
+    else:
+        return JsonResponse({"Error": "Something went wrong!"})
+
+
 
 
 def validate_phone(request):

@@ -19,7 +19,7 @@ class Patient(models.Model):
     name = models.CharField(max_length=40)
     age = models.IntegerField()
     gender = models.CharField(choices=gender_choices, default=NONE, max_length=20)
-    phone = models.CharField(max_length=16, db_index=True)
+    phone = models.CharField(max_length=16, db_index=True, unique=True)
     address = models.TextField(max_length=150)
     date = models.DateTimeField(auto_now_add=True)  # auto_now_add adds current time by default while saving.
 

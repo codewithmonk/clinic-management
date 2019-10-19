@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+    <!--We will receive >tickets< object-->
+
+{% block title %}CMS Home{% endblock %}
+
+{% load static %}
+{% block navigator %}
+<li><a href="/pms/search">Search</a></li>
+<li><a href="/">Home</a></li>
+<li><a href="/pms">PMS</a></li>
+{% endblock %}}
+
+
+{% block main %}
+
+<div class="table-responsive">
+    <center><h2>General Info</h2></center>
+     <table class="table table-hover">
+         <tr>
+             <td>Patient ID</td>
+             <td>{{ patient.id }}</td>
+             <td><a href="add_record/{{ patient.id }}"> Add Record </a></td>
+         </tr>
+         <tr>
+             <td>Name:</td>
+             <td>{{ patient.name }}</td>
+             <td><a href="view_history/{{ patient.id }}">View History</a></td>
+         </tr>
+         <tr>
+             <td>Age:</td>
+             <td colspan="2">{{ patient.age }}</td>
+         </tr>
+         <tr>
+             <td>Phone:</td>
+             <td colspan="2">{{ patient.phone }}</td>
+         </tr>
+         <tr>
+             <td>Address:</td>
+             <td colspan="2"><pre>{{ patient.address }}</pre></td>
+         </tr>
+     </table>
+</div>
+{% endblock %}
