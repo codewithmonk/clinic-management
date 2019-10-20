@@ -58,8 +58,7 @@
 <!--</form>-->
 <div class="container-fluid">
     <center><h1>Add/Update Stock</h1></center>
-    <div class="container">
-    <form method="POST" >{% csrf_token %}
+    <form method="POST" class="text-center" >{% csrf_token %}
         <table class="table table-responsive">
             {% for field in form %}
                 <tr>
@@ -74,7 +73,6 @@
         </table>
 
     </form>
-        </div>
 </div>
 
 {% endblock %}
