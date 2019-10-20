@@ -69,4 +69,25 @@ class CaseSheet(models.Model):
         return self.patient.name
 
 
+class StockManagement(models.Model):
+    cat1 = 'cat1'
+    cat2 = 'cat2'
+    cat3 = 'cat3'
+    categories = (
+        (cat1, cat1),
+        (cat2, cat2),
+        (cat3, cat3)
+    )
+    medicine_category = models.CharField(choices=categories, default=cat1, max_length=50)
+    medicine_name = models.CharField(max_length=150, null=False, db_index=True)
+    universal_code = models.CharField(max_length=30, null=False, unique=True, db_index=True)
+    quantity = models.IntegerField(null=False)
+    manufacturer = models.CharField(max_length=60, null=True, blank=True)
+    date = models.DateTimeField(auto_now=True, editable=False)
+
+    def __str__(self):
+        return "Category:{}, Name:{}"
+
+
+
 

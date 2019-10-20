@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+    <!--We will receive >tickets< object-->
+
+{% block title %}CMS Home{% endblock %}
+
+{% load static %}
+
+{% block navigator %}
+<li><a href="/">Home</a></li>
+{% endblock %}
+
+{% block main %}
+<br><br><br><br>
+		<center><h1>Inventory Management System</h1></center> <br><br><br><br>
+		<div>
+			<center>
+				<a class="btn btn-info" href="add-stock">Add Stock</a>
+                <a class="btn btn-info" href="list-stock">List Stock</a>
+				<a class="btn btn-info" href="search-stock">Search Stock</a>
+				<a class="btn btn-info" href="delete-stock">Delete Stock</a>
+
+			</center>
+
+		</div>
+{% endblock %}

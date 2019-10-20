@@ -13,6 +13,10 @@ urlpatterns = [
     path('doctor-view/', views.search_by_id, name="search_by_id"),
     path('doctor-view/view_history/<int:pk>', views.show_history, name="show_patient_history"),
     path('doctor-view/add_record/<int:pk>', views.add_record, name="add_patient_record"),
+    path('ims/', views.show_ims_functions, name="ims_functions"),
+    path('ims/add-stock', views.add_stock, name="add_stock"),
+    path('ajax/validate_uvc/', views.validate_uvc, name="validate_uvc"),
+    path('ims/list-stock', views.list_stock, name="list_stock"),
 
     #add-patient-info, #search-existing-patient
 ]

@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect, HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.decorators import login_required
-from .forms import PatientForm, PatientRecordForm
-from .models import Patient, CaseSheet
+from .forms import PatientForm, PatientRecordForm, StockForm
+from .models import Patient, CaseSheet, StockManagement
 from django.http import JsonResponse
 from django.views.generic import ListView
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
@@ -67,7 +67,7 @@ def show_history(request, pk):
         records = paginator.page(1)
     except EmptyPage:
         records = paginator.page(paginator.num_pages)
-    return render(request, 'core/patient-history.html', {'records': records, 'patient': patient, 'message':message})
+    return render(request, 'core/patient-history.html', {'records': records, 'patient': patient, 'message': message})
 
 @login_required
 def search_by_phone(request):
@@ -110,8 +110,6 @@ def get_patient_info(request, pk):
         return JsonResponse({"Error": "Something went wrong!"})
 
 
-
-
 def validate_phone(request):
     phone = request.GET.get('phone', None)
     data = {
@@ -121,6 +119,86 @@ def validate_phone(request):
     if data["present"]:
         data["error_message"] = "A user is already registered with this number"
     return JsonResponse(data)
+
+
+@login_required
+def add_stock(request):
+    if request.method == "POST":
+        form = StockForm(request.POST)
+        if form.is_valid():
+            stock = form.save()
+            print("Stock Saved!")
+            stocks = StockManagement.objects.all()
+            page = request.GET.get('page', 1)
+            paginator = Paginator(stocks, 10)
+            try:
+                records = paginator.page(page)
+            except PageNotAnInteger:
+                records = paginator.page(1)
+            except EmptyPage:
+                records = paginator.page(paginator.num_pages)
+            return render(request, 'core/stock-info.html', {'records': records})
+        else:
+            print("Not Valid!")
+            stock_uvc = form.data["universal_code"]
+            stock_quantity = form.data["quantity"]
+            # stock_date = form.data["date"]
+            stock = StockManagement.objects.filter(universal_code=stock_uvc)
+            if len(stock) > 0:
+                stock = stock[0]
+                stock.quantity += int(stock_quantity)
+                stock.save()
+                stocks = StockManagement.objects.all()
+                page = request.GET.get('page', 1)
+                paginator = Paginator(stocks, 10)
+                try:
+                    records = paginator.page(page)
+                except PageNotAnInteger:
+                    records = paginator.page(1)
+                except EmptyPage:
+                    records = paginator.page(paginator.num_pages)
+                return render(request, 'core/stock-info.html', {'records': records})
+            else:
+                print("Failed")
+    else:
+        form = StockForm()
+    return render(request, "core/add-stock.html", {'form': form})
+
+
+@login_required
+def show_ims_functions(request):
+    return render(request, 'core/ims.html', {})
+
+
+def validate_uvc(request):
+    uvc = request.GET.get('uvc', None)
+    stock = StockManagement.objects.filter(universal_code=uvc)
+    data = dict()
+    if len(stock) > 0:
+        print("Stock exists!")
+        stock = stock[0]
+        name = stock.medicine_name
+        category = stock.medicine_category
+        data['present'] = True
+        data['name'] = name
+        data['category'] = category
+    else:
+        data['present'] = False
+    return JsonResponse(data)
+
+
+@login_required
+def list_stock(request):
+    stocks = StockManagement.objects.all()
+    page = request.GET.get('page', 1)
+    paginator = Paginator(stocks, 10)
+    try:
+        records = paginator.page(page)
+    except PageNotAnInteger:
+        records = paginator.page(1)
+    except EmptyPage:
+        records = paginator.page(paginator.num_pages)
+    return render(request, 'core/stock-info.html', {'records': records})
 
 
 

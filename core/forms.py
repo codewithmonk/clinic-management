@@ -1,5 +1,5 @@
 from django import forms
-from .models import Patient, CaseSheet
+from .models import Patient, CaseSheet, StockManagement
 
 
 # To create editable form for Patient details
@@ -52,4 +52,16 @@ class PatientRecordForm(forms.ModelForm):
             'diagnosis',
             'prescriptions',
             'treatments',
+        )
+
+
+class StockForm(forms.ModelForm):
+    class Meta:
+        model = StockManagement
+        fields = (
+            'universal_code',
+            'quantity',
+            'medicine_category',
+            'medicine_name',
+            'manufacturer'
         )
