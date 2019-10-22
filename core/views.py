@@ -8,10 +8,10 @@ from django.views.generic import ListView
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from .models import Patient
 from django.http import JsonResponse
-from django.http import HttpResponse
-from django.views.generic import View
-import datetime
-from .utils import render_to_pdf
+# from django.http import HttpResponse
+# from django.views.generic import View
+# import datetime
+# from .utils import render_to_pdf
 
 
 
