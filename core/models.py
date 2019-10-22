@@ -59,6 +59,7 @@ class CaseSheet(models.Model):
     sathmya = models.CharField(max_length=30)
     ahara = models.CharField(max_length=30)
     # doctor's content
+    investigations = models.TextField(blank=True, null=True)
     diagnosis = models.TextField(blank=True, null=True)
     prescriptions = models.TextField(blank=True, null=True)
     treatments = models.TextField(blank=True, null=True)

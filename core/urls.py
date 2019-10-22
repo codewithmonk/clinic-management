@@ -17,6 +17,8 @@ urlpatterns = [
     path('ims/add-stock', views.add_stock, name="add_stock"),
     path('ajax/validate_uvc/', views.validate_uvc, name="validate_uvc"),
     path('ims/list-stock', views.list_stock, name="list_stock"),
+    # path('print', views.GeneratePdf.as_view(), name="print"),
+    path('print-display/<int:pk>', views.print_display, name="print_display"),
 
     #add-patient-info, #search-existing-patient
 ]

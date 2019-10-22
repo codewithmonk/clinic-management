@@ -8,7 +8,11 @@ from django.views.generic import ListView
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from .models import Patient
 from django.http import JsonResponse
-# Create your views here.
+from django.http import HttpResponse
+from django.views.generic import View
+import datetime
+from .utils import render_to_pdf
+
 
 
 @login_required
@@ -200,5 +204,26 @@ def list_stock(request):
         records = paginator.page(paginator.num_pages)
     return render(request, 'core/stock-info.html', {'records': records})
 
+
+@login_required
+def print_display(request, pk):
+    patient = Patient.objects.filter(pk=pk)
+    if len(patient) > 0:
+        patient = patient[0]
+        print(patient)
+        return render(request, 'core/prescription-sheet.html', {'patient': patient})
+    else:
+        return JsonResponse({"Error": "Something went wrong!"})
+
+# class GeneratePdf(View):
+#     def get(self, request, *args, **kwargs):
+#         data = {
+#             'today': datetime.date.today(),
+#             'amount': 39.99,
+#             'customer_name': 'Cooper Mann',
+#             'order_id': 1233434,
+#         }
+#         pdf = render_to_pdf('core/prescription-sheet.html', data)
+#         return HttpResponse(pdf, content_type='application/pdf')
 
 

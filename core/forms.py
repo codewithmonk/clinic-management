@@ -49,6 +49,7 @@ class PatientRecordForm(forms.ModelForm):
             'sathmya',
             'ahara',
             # doctor's content
+            'investigations',
             'diagnosis',
             'prescriptions',
             'treatments',
