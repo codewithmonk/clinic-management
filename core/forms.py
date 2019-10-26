@@ -60,9 +60,8 @@ class StockForm(forms.ModelForm):
     class Meta:
         model = StockManagement
         fields = (
-            'universal_code',
             'quantity',
-            'medicine_category',
             'medicine_name',
+            'medicine_category',
             'manufacturer'
         )

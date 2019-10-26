@@ -6,7 +6,6 @@ from .models import Patient, CaseSheet, StockManagement
 from django.http import JsonResponse
 from django.views.generic import ListView
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from .models import Patient
 from django.http import JsonResponse
 # from django.http import HttpResponse
 # from django.views.generic import View
@@ -144,10 +143,10 @@ def add_stock(request):
             return render(request, 'core/stock-info.html', {'records': records})
         else:
             print("Not Valid!")
-            stock_uvc = form.data["universal_code"]
+            medicine_name = form.data["medicine_name"]
             stock_quantity = form.data["quantity"]
             # stock_date = form.data["date"]
-            stock = StockManagement.objects.filter(universal_code=stock_uvc)
+            stock = StockManagement.objects.filter(medicine_name=medicine_name)
             if len(stock) > 0:
                 stock = stock[0]
                 stock.quantity += int(stock_quantity)
@@ -175,17 +174,17 @@ def show_ims_functions(request):
 
 
 def validate_uvc(request):
-    uvc = request.GET.get('uvc', None)
-    stock = StockManagement.objects.filter(universal_code=uvc)
+    medicine_name = request.GET.get('medicine_name', None)
+    stock = StockManagement.objects.filter(medicine_name=medicine_name)
     data = dict()
     if len(stock) > 0:
         print("Stock exists!")
         stock = stock[0]
-        name = stock.medicine_name
         category = stock.medicine_category
+        manufacturer = stock.manufacturer
         data['present'] = True
-        data['name'] = name
         data['category'] = category
+        data['manufacturer'] = manufacturer
     else:
         data['present'] = False
     return JsonResponse(data)

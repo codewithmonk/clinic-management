@@ -1,5 +1,7 @@
 from django.db import models
+import pandas as pd
 from time import timezone
+import os
 
 # Create your models here.
 NONE = 'NOT WILLING TO SHARE'
@@ -22,7 +24,6 @@ class Patient(models.Model):
     phone = models.CharField(max_length=16, db_index=True, unique=True)
     address = models.TextField(max_length=150)
     date = models.DateTimeField(auto_now_add=True)  # auto_now_add adds current time by default while saving.
-
 
     def __str__(self):
         return "{} ({})".format(self.name, self.age)
@@ -70,21 +71,23 @@ class CaseSheet(models.Model):
         return self.patient.name
 
 
+dataframe = pd.read_csv(os.path.join(os.path.abspath(os.curdir), "core/resources/categories.csv"), sep=",")
+
+categories = dataframe["CategoryName"].to_list()
+
+if len(categories) > 0:
+    category_values = ((category, category) for category in categories)
+else:
+    category_values = (("NONE", "NONE"))
+
+
 class StockManagement(models.Model):
-    cat1 = 'cat1'
-    cat2 = 'cat2'
-    cat3 = 'cat3'
-    categories = (
-        (cat1, cat1),
-        (cat2, cat2),
-        (cat3, cat3)
-    )
-    medicine_category = models.CharField(choices=categories, default=cat1, max_length=50)
     medicine_name = models.CharField(max_length=150, null=False, db_index=True)
-    universal_code = models.CharField(max_length=30, null=False, unique=True, db_index=True)
+    medicine_category = models.CharField(max_length=150, choices=category_values)
     quantity = models.IntegerField(null=False)
     manufacturer = models.CharField(max_length=60, null=True, blank=True)
     date = models.DateTimeField(auto_now=True, editable=False)
+    # medicine_category = models.ForeignKey(StockCategory, on_delete=models.CASCADE, related_name="Stock")
 
     def __str__(self):
         return "Category:{}, Name:{}"

@@ -10,25 +10,23 @@
     <script>
 
         $(document).ready(function(){
-            $("#id_universal_code").focusout(function(){
-                var universal_code = $("#id_universal_code").val();
+            $("#id_medicine_name").focusout(function(){
+                var medicine_name = $("#id_medicine_name").val();
                 $.ajax({
                     url: '/ajax/validate_uvc/',
                     data: {
-                      'uvc': universal_code
+                      'medicine_name': medicine_name
                     },
                     dataType: 'json',
                     success: function (data) {
                       if (data.present == false) {
-                        $("#id_medicine_name").prop('disabled', false);
                         $("#id_medicine_category").prop('disabled', false);
                         $("#id_manufacturer").prop('disabled', false);
                         $("#update_stock").prop('disabled', true);
                         $("#add_stock").prop('disabled', false);
                       } else{
                         $("#id_medicine_category").val(data.category);
-                        $("#id_medicine_name").val(data.name);
-                        $("#id_medicine_name").prop('disabled', true);
+                        $("#id_manufacturer").val(data.manufacturer)
                         $("#id_medicine_category").prop('disabled', true);
                         $("#id_manufacturer").prop('disabled', true);
                         $("#update_stock").prop('disabled', false);
