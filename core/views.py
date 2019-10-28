@@ -214,15 +214,23 @@ def print_display(request, pk):
     else:
         return JsonResponse({"Error": "Something went wrong!"})
 
-# class GeneratePdf(View):
-#     def get(self, request, *args, **kwargs):
-#         data = {
-#             'today': datetime.date.today(),
-#             'amount': 39.99,
-#             'customer_name': 'Cooper Mann',
-#             'order_id': 1233434,
-#         }
-#         pdf = render_to_pdf('core/prescription-sheet.html', data)
-#         return HttpResponse(pdf, content_type='application/pdf')
+
+@login_required
+def render_search_stock(request):
+    if request.method == "POST":
+        medicine_name = request.POST.get('medicine_name', None)
+        print(medicine_name)
+        if medicine_name:
+            stock = StockManagement.objects.filter(medicine_name=medicine_name)
+            # print(patient[0].name)
+            if len(stock) > 0:
+                return render(request, 'core/stock.html', {'stock': stock[0]})
+            else:
+                return render(request, 'core/search-stock.html', {})
+    return render(request, 'core/search-stock.html', {})
+
+
+
+
 
 

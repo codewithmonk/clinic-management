@@ -19,6 +19,7 @@ urlpatterns = [
     path('ims/list-stock', views.list_stock, name="list_stock"),
     # path('print', views.GeneratePdf.as_view(), name="print"),
     path('print-display/<int:pk>', views.print_display, name="print_display"),
+    path('ims/search-stock', views.render_search_stock, name="search_stock"),
 
     #add-patient-info, #search-existing-patient
 ]

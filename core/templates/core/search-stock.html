@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+    <!--We will receive >tickets< object-->
+
+{% block title %}Search Stock{% endblock %}
+
+{% load static %}
+{% block navigator %}
+<li><a href="/">Home</a></li>
+<li><a href="/ims">IMS</a></li>
+<li><a href="/ims/add-stock">Add another stock</a></li>
+{% endblock %}
+
+{% block main %}
+
+<!--<form method="POST">{% csrf_token %}-->
+<!--    {{ form.as_p }}-->
+<!--    <button type="submit" class="save btn btn-default" id="add_stock">Add New Stock</button> &nbsp; &nbsp;-->
+<!--    <button type="submit" class="save btn btn-default" id="update_stock">Update Stock</button>-->
+<!--</form>-->
+<div class="container-fluid">
+    <div class="conatiner">
+        <center>
+            <form class="form-group" method="POST"> {% csrf_token %}
+                <label>Enter Stock name:</label>
+                <input type="text" name="medicine_name">
+                <button class="btn btn-primary" type="submit" >Search</button>
+            </form>
+        </center>
+    </div>
+</div>
+
+{% endblock %}

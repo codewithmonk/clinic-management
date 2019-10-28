@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+    <!--We will receive >tickets< object-->
+
+{% block title %}CMS Home{% endblock %}
+
+{% load static %}
+
+{% block navigator %}
+<li><a href="/">Home</a></li>
+<li><a href="/ims">IMS</a></li>
+{% endblock %}
+
+
+{% block main %}
+<div class="table-responsive">
+        <center><h2>Stock Information</h2></center>
+         <table class="table table-hover">
+             <tr>
+                 <th>Medicine Name</th>
+                 <th>Medicine Category</th>
+                 <th>Remaining Quantity</th>
+                 <th>Manufacturer</th>
+                 <th>Last Stock-up Date</th>
+             </tr>
+             <tr>
+                 <td>{{ stock.medicine_name }}</td>
+                 <td>{{ stock.medicine_category }}</td>
+                 <td>{{ stock.quantity }}</td>
+                 <td>{{ stock.manufacturer }}</td>
+                 <td>{{ stock.date }}</td>
+             </tr>
+         </table>
+</div>
+{% endblock %}
