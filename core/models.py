@@ -82,7 +82,7 @@ else:
 
 
 class StockManagement(models.Model):
-    medicine_name = models.CharField(max_length=150, null=False, db_index=True)
+    medicine_name = models.CharField(max_length=150, null=False, db_index=True, unique=True)
     medicine_category = models.CharField(max_length=150, choices=category_values)
     quantity = models.IntegerField(null=False)
     manufacturer = models.CharField(max_length=60, null=True, blank=True)

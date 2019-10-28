@@ -230,7 +230,11 @@ def render_search_stock(request):
     return render(request, 'core/search-stock.html', {})
 
 
-
+@login_required
+def delete_stock(request, id):
+    medicine = StockManagement.objects.filter(id=id)[0]
+    medicine.delete()
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
 

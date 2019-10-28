@@ -5,10 +5,22 @@
 {% block title %}CMS Home{% endblock %}
 
 {% load static %}
-
+{% block javascript %}
+<script>
+   function confirm_delete(id){
+    var result = confirm("Are you sure?")
+    if(result == true){
+        location.href = "/delete/"+id
+    } else {
+        //
+    }
+   }
+</script>
+{% endblock %}
 {% block navigator %}
 <li><a href="/">Home</a></li>
 <li><a href="/ims">IMS</a></li>
+<li><a href="/ims/add-stock">Add More Stock</a></li>
 {% endblock %}
 
 
@@ -22,6 +34,7 @@
                  <th>Remaining Quantity</th>
                  <th>Manufacturer</th>
                  <th>Last Stock-up Date</th>
+                 <th>Option</th>
              </tr>
              <tr>
                  <td>{{ stock.medicine_name }}</td>
@@ -29,6 +42,8 @@
                  <td>{{ stock.quantity }}</td>
                  <td>{{ stock.manufacturer }}</td>
                  <td>{{ stock.date }}</td>
+                 <td id="delete_stock"
+                        onclick="confirm_delete({{ stock.id }})"><a class="btn btn-danger">Delete</a></td>
              </tr>
          </table>
 </div>
