@@ -21,6 +21,12 @@ urlpatterns = [
     path('print-display/<int:pk>', views.print_display, name="print_display"),
     path('ims/search-stock', views.render_search_stock, name="search_stock"),
     path('delete/<int:id>', views.delete_stock, name="delete_stock"),
+    path('billing/', views.render_billing, name="billing_management"),
+    path('billing/registration', views.generate_registration, name="generate_registration"),
+    path('ajax/get_user_info/', views.get_user_info, name="get_user_info"),
+    path('ajax/add_income/', views.add_finance, name="add_income"),
+    # path('billing/patient-bill', )
+
 
     #add-patient-info, #search-existing-patient
 ]

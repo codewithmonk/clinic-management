@@ -63,5 +63,6 @@ class StockForm(forms.ModelForm):
             'quantity',
             'medicine_name',
             'medicine_category',
-            'manufacturer'
+            'manufacturer',
+            'unit_price'
         )

@@ -2,6 +2,7 @@ from django.db import models
 import pandas as pd
 from time import timezone
 import os
+import datetime
 
 # Create your models here.
 NONE = 'NOT WILLING TO SHARE'
@@ -87,10 +88,20 @@ class StockManagement(models.Model):
     quantity = models.IntegerField(null=False)
     manufacturer = models.CharField(max_length=60, null=True, blank=True)
     date = models.DateTimeField(auto_now=True, editable=False)
+    unit_price = models.IntegerField(null=False, default=0)
     # medicine_category = models.ForeignKey(StockCategory, on_delete=models.CASCADE, related_name="Stock")
 
     def __str__(self):
         return "Category:{}, Name:{}"
+
+
+class FinanceManagement(models.Model):
+    date = models.DateTimeField(auto_now=True, editable=False)
+    particular = models.TextField(max_length=300)
+    income = models.IntegerField(default=0)
+    expense = models.IntegerField(default=0)
+    month = models.IntegerField(default=datetime.datetime.today().month, editable=False)
+
 
 
 

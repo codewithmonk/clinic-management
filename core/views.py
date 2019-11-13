@@ -2,11 +2,12 @@ from django.shortcuts import render, redirect, HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.decorators import login_required
 from .forms import PatientForm, PatientRecordForm, StockForm
-from .models import Patient, CaseSheet, StockManagement
+from .models import Patient, CaseSheet, StockManagement, FinanceManagement
 from django.http import JsonResponse
 from django.views.generic import ListView
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.http import JsonResponse
+import datetime
 # from django.http import HttpResponse
 # from django.views.generic import View
 # import datetime
@@ -182,9 +183,11 @@ def validate_uvc(request):
         stock = stock[0]
         category = stock.medicine_category
         manufacturer = stock.manufacturer
+        price = stock.unit_price
         data['present'] = True
         data['category'] = category
         data['manufacturer'] = manufacturer
+        data['price'] = price
     else:
         data['present'] = False
     return JsonResponse(data)
@@ -235,6 +238,60 @@ def delete_stock(request, id):
     medicine = StockManagement.objects.filter(id=id)[0]
     medicine.delete()
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+
+@login_required
+def render_billing(request):
+    return render(request, 'core/billing.html', {})
+
+
+@login_required
+def generate_registration(request):
+    return render(request, 'core/registration-bill.html', {})
+
+
+def get_user_info(request):
+    phone = request.GET.get('phone', None)
+    patient = Patient.objects.filter(phone=phone)
+    data = dict()
+    if len(patient) > 0:
+        data['present'] = True
+        patient = patient[0]
+        data['name'] = patient.name
+        data['age'] = patient.age
+        data['date'] = datetime.datetime.today().date()
+    else:
+        data['present'] = False
+    if data["present"] is False:
+        data["error_message"] = "User not found, please search again!"
+    return JsonResponse(data)
+
+
+def add_finance(request):
+    phone = request.GET.get('phone', None)
+    particular = request.GET.get('particular', None)
+    income = request.GET.get('income', 0)
+    expense = request.GET.get('expense', 0)
+    data = dict()
+    if phone and particular and income and expense:
+        item = FinanceManagement(
+            particular=particular+"_"+str(phone),
+            income=int(income),
+            expense=int(expense),
+        )
+        try:
+            item.save()
+            data['success'] = True
+        except:
+            data['success'] = False
+
+    else:
+        data['success'] = False
+    return JsonResponse(data)
+
+
+
+
 
 
 

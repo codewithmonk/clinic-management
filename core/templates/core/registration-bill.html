@@ -1,0 +1,179 @@
+{% extends 'base.html' %}
+
+<!--We will receive >tickets< object-->
+
+{% block title %}Patient Registration Bill{% endblock %}
+
+{% load static %}
+{% block javascript %}
+<script>
+        $(document).ready(function(){
+
+            $("#id_phone").focusout(function(){
+                var phone = $("#id_phone").val();
+                $.ajax({
+                    url: '/ajax/get_user_info/',
+                    data: {
+                      'phone': phone
+                    },
+                    dataType: 'json',
+                    success: function (data) {
+                      if (data.present == true) {
+                        $("#bill").attr("hidden", false);
+                        $("#search").attr("hidden", true)
+                        $("#name").html(data.name);
+                        $("#age").html(data.age);
+                        $("#date").html(data.date);
+                        $.ajax({
+                            url: '/ajax/add_income/',
+                            data: {
+                                'phone': phone,
+                                'particular': 'registration',
+                                'income': 200,
+                                'expense': 0
+                            },
+                            dataType: 'json',
+                            success: function(data) {
+                                if (data.success == true){
+                                    alert("Data Saved!");
+                                    window.print();
+                                }
+                                else{
+                                    alert("Data Not Saved. Please try again!");
+                                }
+                            }
+                        })
+
+
+                      } else{
+                        $("#bill").attr("hidden", true);
+                        $("#search").attr("hidden", false);
+                        $("#name").html("");
+                        $("#age").html("");
+                        $("#date").html("");
+                        alert(data.error_message)
+                      }
+                    }
+                  });
+
+            });
+        })
+
+
+</script>
+
+<script>
+document.getElementById("print").addEventListener("click", printPage);
+function printPage() {
+   alert("Clicked Me!");
+  window.print();
+
+</script>
+{% endblock %}
+
+{% block navigator %}
+<li><a href="/">Home</a></li>
+{% endblock %}
+
+{% block main %}
+
+<div class="container" id="search">
+    <label>Enter Phone Number: </label><input type="tel" id="id_phone">
+</div>
+
+<div class="container" id="bill" hidden>
+    <style>
+    .column {
+  float: left;
+  width: 50%;
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+    </style>
+
+    <div class="row">
+        <div class="column">
+            <br>
+            <br>
+            <br>
+            <br>
+            3rd floor, Empore Views, Nh Bypass Junction,<br>
+            Malaparamba, Calicut, Kerala - 673009<br><br>
+            ayumantra@gmail.com<br>
+            www.ayumantra.com<br><br>
+        </div>
+        <div class="column">
+            <span style="float: right"><img height="200px" width="200px" src="{% static 'resource/icon.png' %}"></span>
+        </div>
+    </div>
+    <hr>
+    <hr>
+    <table width="100%">
+        <tr>
+            <td width="30%">Name: <span id="name"></span></td>
+            <td width="30%">Age: <span id="age"></span></td>
+            <td width="30%">Date: <span id="date"></span></td>
+        </tr>
+    </table>
+    <hr>
+    <hr>
+    <table>
+        <tr>
+            <th class="col">Particulars</th>
+            <th width="30%">Cost</th>
+        </tr>
+        <tr>
+            <td colspan="2"><br></td>
+        </tr>
+        <tr>
+            <td class="col">Registration</td>
+            <td>200.00</td>
+        </tr>
+        <tr>
+            <td colspan="2"><br></td>
+        </tr>
+        <tr>
+            <td colspan="2"><br></td>
+        </tr>
+        <tr>
+            <td colspan="2"><br></td>
+        </tr>
+        <tr>
+            <td colspan="2"><br></td>
+        </tr>
+        <tr>
+            <td colspan="2"><br></td>
+        </tr>
+        <tr>
+            <td colspan="2"><br></td>
+        </tr>
+        <tr>
+            <td colspan="2"><br></td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <hr>
+            </td>
+        </tr>
+        <tr>
+            <td><h2>Total</h2></td>
+            <td>INR 200.00</td>
+        </tr>
+<!--        <tr>-->
+<!--            <td colspan="2">-->
+<!--                {% block print %} <button class="btn btn-info" id="print_it" style="float:right">Print</button> {% endblock %}-->
+<!--            </td>-->
+<!--        </tr>-->
+    </table>
+    <hr>
+
+</div>
+
+
+{% endblock %}

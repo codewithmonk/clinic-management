@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+    <!--We will receive >tickets< object-->
+
+{% block title %}Billing{% endblock %}
+
+{% load static %}
+
+{% block navigator %}
+<li><a href="/">Home</a></li>
+{% endblock %}
+
+{% block main %}
+<br><br><br><br>
+		<center><h1>Billing System</h1></center> <br><br><br><br>
+		<div>
+			<center>
+				<a class="btn btn-info" href="registration">Patient Receipt</a>
+                <a class="btn btn-info" href="medicine-bill">Medicine Receipt</a>
+				<a class="btn btn-info" href="other-bill">Other Receipts</a>
+			</center>
+		</div>
+{% endblock %}
